@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Match results</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+
+<form action="{{ url_for('downloadresult') }}" method="POST" enctype="multipart/form-data">
+
+<span>To download the results as excel file click here --->>  <button class="go-home-btn" type="submit" > Download </button> 
+ </span>
+
+</form>
+
+
+
+<br>
+{% for i,j,k,l,m in zip_list %}
+
+<button id="button_{{m}}" class="button button1">
+<h2> {{l}}'s Resume  matches <span class="percentage">{{ i }}%</span> to Job Description</h2>
+</button>
+
+<br>
+<div id="description_button_{{m}}" style="display: none; text-align: left;">
+	
+<h3>{{ j|length }} keywords are missing in resume  :</h3>
+<ul class="columns" data-columns="3">
+	{% for a in j %}
+
+<li>{{a}}</li>
+<br>
+
+	{% endfor %}
+</ul>
+<br>
+
+</ul>
+
+
+
+<br><br>
+
+</div>
+
+{% endfor %}
+
+<p>To go back to home click here! <a href="{{ url_for('home') }}"><button class="go-home-btn" >Go home</button></a></p>
+
+<script type="text/javascript">
+	
+$(document).ready(function() {          
+    $('.button').each(function(){
+        var toggle_div_id = 'description_' + $(this).attr('id');
+        $(this).click(function(){
+            $('#'+toggle_div_id).toggle('hidden');
+        });
+    });
+});
+
+</script>
+
+<!--  Script for charts -->
+
+
+
+
+
+
+</body>
+</html>

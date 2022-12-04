@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JD2Resume</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+<div class="container">
+
+<div class="input">
+<h3> Please upload Job Description and Resume here </h3>
+<br>
+<form action="{{ url_for('newresult') }}" method="POST" enctype="multipart/form-data">
+
+<label for="myfile">Select a Job Description:</label>
+<input type="file" id="jd" name="jd" accept=".doc,.docx"><br>
+<span class ="note">* You can select docx file</span> 
+<br>
+<label for="myfile">Select Resume : </label>
+<input type="file" id="resume" name="resume" accept=".doc,.docx, .pdf" multiple><br>
+<span class ="note">* You can select multiple resumes (docx and pdfs)</span> 
+<br>
+	<label for="role_type">Choose a skill bucket:</label>
+  <select id="role_type" name="role_type">
+    <option value="BA" selected="">BA</option>
+    <option value="PM">PM</option>
+    <option value="SM">SM</option>
+  </select>
+<br><br>
+
+
+<button id="submit-search" type="submit" value="submit">Compare</button>
+</form>
+
+</div>
+<div class="counter">
+<h2><div id="value">0</div></h2> <div class="count_text" ><h3>resumes checked and still counting ...</h3></div></div>
+</div>
+
+<p>To go back to tool-home click here! <a href="{{ url_for('realhome') }}"><button class="go-home-btn" >Go home</button></a></p>
+<script type="text/javascript">
+function animateValue(id, start, end, duration) {
+    // assumes integer values for start and end
+    var initial_count = '{{ initial_count }}'
+    var obj = document.getElementById(id);
+    var range = end - start;
+    // no timer shorter than 50ms (not really visible any way)
+    var minTimer = 50;
+    // calc step time to show all interediate values
+    var stepTime = Math.abs(Math.floor(duration / range));
+    
+    // never go below minTimer
+    stepTime = Math.max(stepTime, minTimer);
+    
+    // get current time and calculate desired end time
+    var startTime = new Date().getTime();
+    var endTime = startTime + duration;
+    var timer;
+  
+    function run() {
+        var now = new Date().getTime();
+        var remaining = Math.max((endTime - now) / duration, 0);
+        var value = Math.round(end - (remaining * range));
+        obj.innerHTML = value;
+        if (value == end) {
+            clearInterval(timer);
+        }
+    }
+    
+    timer = setInterval(run, stepTime);
+    run();
+}
+
+animateValue("value", 0, '{{ initial_count }}' , 1000);
+</script>
+
+
+</body>
+</html>

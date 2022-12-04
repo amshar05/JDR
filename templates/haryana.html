@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Haryana State Covid Cases</title>
+</head>
+<body>
+<style type="text/css">
+	body{
+	
+	}
+	
+	table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>	
+	<h1 style="text-align: center; color: orange;">Haryana state district wise Covid prediction</h2>
+	<br><br>
+
+{% for i,row in df.iterrows() %}
+	<div class="plot" style="display: inline-block;">
+		<div>
+		<img src="/static/{{row['district']}}.png">
+	</div>
+	<div class="info" style="text-align: center;">
+		<table>
+			<tr>
+				<th>Date</th>
+				<th>Confirmed</th>
+				<th>Recovered</th>
+				<th>Deceased</th>
+			</tr>
+
+			<tr>
+				<td>{{row['date']}}</td>
+				<td>{{row['confirmed']}}</td>
+				<td>{{row['recovered']}}</td>
+				<td>{{row['deceased']}}</td>
+			</tr>
+		</table>
+		
+	</div>
+</div>
+{% endfor %}
+	
+	<div>
+		<br><br>
+	<span style="color: red;">	Please Note:</span>
+	<p style="color: red;">
+			1. Data source - www.covid19india.org.<br>
+			2. Predictions are made for upcoming two weeks.<br>
+			3. Predictions are based on forecasting methods.
+	</p>
+</div>
+	<br><br>
+</body>
+</html>

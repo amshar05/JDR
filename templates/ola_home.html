@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<h2 style="color:Red;">How to use tutorial to be added.</h2>
+<div class="head">
+<h2><span id="heading">Extract Ola Trips</span></h2>
+
+</div>
+	
+	
+<div class="input">
+	<form action="{{ url_for('result_ola') }}", method="POST", enctype="multipart/form-data">
+		<label for="myfile">Select a file:</label>
+  <input type="file" id="myfile" name="myfile" accept=".html"><br><br>
+  <label for="start_date">Start date:</label>
+  <input type="date" id="start_date" name="start_date">
+  <br><br>
+    <label for="end_date">End date:</label>
+  <input type="date" id="end_date" name="end_date">
+  <br><br>
+  <input type="submit">
+	</form>
+</div>
+<div class="counter">
+<h2><div id="value">0</div></h2> <div class="count_text" ><h3>trips extracted and still counting ...</h3></div></div>
+</div>
+	
+<p>To go back to tool-home click here! <a href="{{ url_for('realhome') }}"><button class="go-home-btn" >Go home</button></a></p>
+
+<script type="text/javascript">
+function animateValue(id, start, end, duration) {
+    // assumes integer values for start and end
+    var initial_count = '{{ initial_count }}'
+    var obj = document.getElementById(id);
+    var range = end - start;
+    // no timer shorter than 50ms (not really visible any way)
+    var minTimer = 50;
+    // calc step time to show all interediate values
+    var stepTime = Math.abs(Math.floor(duration / range));
+    
+    // never go below minTimer
+    stepTime = Math.max(stepTime, minTimer);
+    
+    // get current time and calculate desired end time
+    var startTime = new Date().getTime();
+    var endTime = startTime + duration;
+    var timer;
+  
+    function run() {
+        var now = new Date().getTime();
+        var remaining = Math.max((endTime - now) / duration, 0);
+        var value = Math.round(end - (remaining * range));
+        obj.innerHTML = value;
+        if (value == end) {
+            clearInterval(timer);
+        }
+    }
+    
+    timer = setInterval(run, stepTime);
+    run();
+}
+
+animateValue("value", 0, '{{ initial_count }}' , 1000);
+</script>
+
+
+</body>
+</html>

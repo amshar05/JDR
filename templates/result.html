@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Match results</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+<br>
+{% for i,j,k,l,m in zip_list %}
+
+<button id="button_{{m}}" class="button button1">
+<h2> {{l}}'s Resume  matches <span class="percentage">{{ i }}%</span> to Job Description</h2>
+</button>
+
+<br>
+<div id="description_button_{{m}}" style="display: none; text-align: left;">
+	
+<h3>{{ j|length }} skills present in JD but not present in Resume are :</h3>
+<ul class="columns" data-columns="5">
+	{% for a in j %}
+
+<li>{{a}}</li>
+
+	{% endfor %}
+</ul>
+<br>
+
+<h3>{{ k|length }} skills present in Job Description and Resume are :</h3>
+<ul class="columns" data-columns="5">
+	{% for b in k %}
+
+<li>{{b}}</li>
+
+	{% endfor %}
+</ul>
+<br><br>
+
+</div>
+
+{% endfor %}
+<p>To go back to home click here! <a href="{{ url_for('home') }}"><button class="go-home-btn" >Go home</button></a></p>
+
+<script type="text/javascript">
+	
+$(document).ready(function() {          
+    $('.button').each(function(){
+        var toggle_div_id = 'description_' + $(this).attr('id');
+        $(this).click(function(){
+            $('#'+toggle_div_id).toggle('hidden');
+        });
+    });
+});
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Grammar Check</title>
+	<link rel="stylesheet" type="text/css" href="/Users/amit/Documents/grammar/static/styles.css">
+
+<style type="text/css">
+	
+	body{
+	 margin: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  	font-family: verdana;
+    text-align: center;
+background-color: #7FDBFF;
+}
+.input{
+    margin:20%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 25px;
+  border: 2px solid black;
+  padding: 5%; 
+      text-align: center;
+
+
+}
+#submit-search{
+
+  border: none;
+  padding: 7px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 5% 20%;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: #4267B2; 
+  color: white; 
+  border: 0.5px solid black;
+  border-radius: 12px;
+
+}
+#submit-search:hover {
+  background-color: white;
+  color: black;}
+
+.go-home-btn{
+      padding: 4px 6px;
+      cursor: pointer;
+      background-color: #4267B2; 
+  color: black; 
+  border: 0.5px solid black;
+  border-radius: 12px;
+</style>
+
+</head>
+<body>
+<h2 style="color:Red;">WIP - Testing Only.</h2>
+<div class="head">
+<h2><span id="heading">Check Grammar</span></h2>
+
+</div>
+
+<div class="input">
+<form action="{{ url_for('grammar_result_route') }}" method="POST" enctype="multipart/form-data">
+
+<label for="myfile">Select a file to check:</label>
+<input type="file" id="grammar_doc" name="grammar_doc" accept=".doc,.docx"><br><br>
+
+<button id="submit-search" type="submit" value="submit">Check</button>
+
+</form>
+</div>
+<div class="counter">
+<h2><div id="value">0</div></h2> <div class="count_text" ><h3>documents corrected and still counting ...</h3></div></div>
+</div>
+	
+<p>To go back to tool-home click here! <a href="{{ url_for('realhome') }}"><button class="go-home-btn" >Go home</button></a></p>
+
+<script type="text/javascript">
+function animateValue(id, start, end, duration) {
+    // assumes integer values for start and end
+    var initial_count = '{{ initial_count }}'
+    var obj = document.getElementById(id);
+    var range = end - start;
+    // no timer shorter than 50ms (not really visible any way)
+    var minTimer = 50;
+    // calc step time to show all interediate values
+    var stepTime = Math.abs(Math.floor(duration / range));
+    
+    // never go below minTimer
+    stepTime = Math.max(stepTime, minTimer);
+    
+    // get current time and calculate desired end time
+    var startTime = new Date().getTime();
+    var endTime = startTime + duration;
+    var timer;
+  
+    function run() {
+        var now = new Date().getTime();
+        var remaining = Math.max((endTime - now) / duration, 0);
+        var value = Math.round(end - (remaining * range));
+        obj.innerHTML = value;
+        if (value == end) {
+            clearInterval(timer);
+        }
+    }
+    
+    timer = setInterval(run, stepTime);
+    run();
+}
+
+animateValue("value", 0, '{{ initial_count }}' , 1000);
+</script>
+
+
+</body>
+</html>
