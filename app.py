@@ -20,6 +20,7 @@ import openpyxl
 from io import BytesIO
 from excel_edit import edit_excel, read_excel
 #from grammar_function import wordtotxt, grammar_result
+nltk.download('averaged_perceptron_tagger')
 
 
 env = jinja2.Environment()
